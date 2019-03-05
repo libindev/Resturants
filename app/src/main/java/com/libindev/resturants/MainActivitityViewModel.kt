@@ -1,43 +1,49 @@
 package com.libindev.resturants
 
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.QuerySnapshot
+import com.libindev.resturants.repository.Repository
 
-class MainActivitityViewModel : ViewModel() {
-    private var resturantMenuDocmt: MutableLiveData<QuerySnapshot>? = null
+class MainActivitityViewModel: ViewModel() {
+    private  val _repository:Repository by lazy{
+        // runs on first access
+        Repository
+    }
 
+    private var resturantMenu: MutableLiveData<QuerySnapshot>? = null
     private var resturantMenuItem: MutableLiveData<QuerySnapshot>? = null
 
-    fun getResturantMenuDocmt(): MutableLiveData<QuerySnapshot> {
-        if (resturantMenuDocmt == null) {
-            resturantMenuDocmt = MutableLiveData()
-           // loadUsers(context)
+    fun getResturantMenu(): MutableLiveData<QuerySnapshot> {
+        if (resturantMenu == null) {
+            resturantMenu = MutableLiveData()
+
+
+
         }
-        return resturantMenuDocmt as MutableLiveData<QuerySnapshot>
+        return resturantMenu as MutableLiveData<QuerySnapshot>
     }
 
     fun getResturantMenuItem(): MutableLiveData<QuerySnapshot> {
+
         if (resturantMenuItem == null) {
             resturantMenuItem = MutableLiveData()
-            // loadUsers(context)
-        }
-        return resturantMenuItem as MutableLiveData<QuerySnapshot>
-    }//
-   /* private fun loadUsers(context: Context) {
-        FirebaseApp.initializeApp(context);
-        val db = FirebaseFirestore.getInstance()
 
-        db.collection("Resturant Menu")
-            .orderBy("name", Query.Direction.ASCENDING)
-            .get()
-            .addOnSuccessListener { documents ->
-               resturantMenuDocmt?.postValue(documents)
-            }
-            .addOnFailureListener { exception ->
-                Log.w(MainActivity.TAG, "Error getting documents: ", exception)
-            }
-        // Do an asynchronous operation to fetch resturantMenuDocmt.
-    }*/
+
+        }
+
+        return resturantMenuItem as MutableLiveData<QuerySnapshot>
+    }
+
+   fun loadRestaurantItem(context: Context, menu_id:String){
+
+        _repository.loadResturantItem(context,resturantMenuItem,menu_id )
+    }
+
+    fun loadRestaurantMenu(context: Context){
+        _repository.loadResturantMenu(context,resturantMenu )
+    }
+
 }

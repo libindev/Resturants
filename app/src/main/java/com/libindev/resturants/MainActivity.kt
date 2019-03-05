@@ -9,7 +9,6 @@ import android.widget.LinearLayout
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.firestore.DocumentSnapshot
 
 import com.google.firebase.firestore.QuerySnapshot
 import com.libindev.resturants.adapters.ResturantItemAdapter
@@ -23,6 +22,7 @@ class MainActivity : AppCompatActivity(),ResturantMenuAdapter.onMenuClickListene
     // lateinit var query:Query
     lateinit   var   restaurantMenu :MutableLiveData<QuerySnapshot>
     lateinit   var   restaurantItem :MutableLiveData<QuerySnapshot>
+    lateinit   var   model: MainActivitityViewModel
 
     companion object {
         val TAG:String="MAIN"
@@ -40,8 +40,8 @@ class MainActivity : AppCompatActivity(),ResturantMenuAdapter.onMenuClickListene
         val recyclerViewItem = findViewById(R.id.recycler_item) as RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayout.HORIZONTAL, false)
         recyclerViewItem.layoutManager = LinearLayoutManager(this, LinearLayout.HORIZONTAL, false)
-        val model = ViewModelProviders.of(this).get(MainActivitityViewModel::class.java)
-         restaurantMenu=  model.getResturantMenuDocmt()
+          model = ViewModelProviders.of(this).get(MainActivitityViewModel::class.java)
+         restaurantMenu=  model.getResturantMenu()
          restaurantMenu.observe(this, Observer<QuerySnapshot>{ resturantMenuDocmt ->
             if (resturantMenuDocmt != null) {
 
@@ -70,14 +70,13 @@ class MainActivity : AppCompatActivity(),ResturantMenuAdapter.onMenuClickListene
         })
 
 
-        Repository.loadResturantMenu(this,restaurantMenu)
+          model.loadRestaurantMenu(this@MainActivity)
 
 
     }
 
      override fun onclick(id:String) {
-
-         Repository.loadResturantItem(this,restaurantItem,id)
+         model.loadRestaurantItem(this@MainActivity,id)
 
 
      }

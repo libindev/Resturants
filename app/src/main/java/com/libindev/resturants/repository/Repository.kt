@@ -10,7 +10,7 @@ import com.google.firebase.firestore.QuerySnapshot
 import com.libindev.resturants.MainActivity
 
 object Repository{
-    fun loadResturantMenu(context: Context,resturantMenuDocmt: MutableLiveData<QuerySnapshot>) {
+    fun loadResturantMenu(context: Context,resturantMenuDocmt: MutableLiveData<QuerySnapshot>?) {
         FirebaseApp.initializeApp(context);
 
         val db = FirebaseFirestore.getInstance()
@@ -19,15 +19,17 @@ object Repository{
             .orderBy("name", Query.Direction.ASCENDING)
             .get()
             .addOnSuccessListener { documents ->
-                resturantMenuDocmt.postValue(documents)
+                if(resturantMenuDocmt!=null) {
+                    resturantMenuDocmt.postValue(documents)
+                }
             }
             .addOnFailureListener { exception ->
                 Log.w(MainActivity.TAG, "Error getting documents: ", exception)
             }
-        // Do an asynchronous operation to fetch resturantMenuDocmt.
+
     }
 
-    fun loadResturantItem(context: Context,resturantMenuItem: MutableLiveData<QuerySnapshot>,id:String) {
+    fun loadResturantItem(context: Context,resturantMenuItem: MutableLiveData<QuerySnapshot>?,id:String) {
 
 
         val db = FirebaseFirestore.getInstance()
@@ -41,12 +43,14 @@ object Repository{
                     Log.d(MainActivity.TAG, document.id + " => " + document.get("name"))
                 }
 
-                resturantMenuItem.postValue(documents)
+                if (resturantMenuItem != null) {
+                    resturantMenuItem.postValue(documents)
+                }
             }
             .addOnFailureListener { exception ->
                 Log.w(MainActivity.TAG, "Error getting documents: ", exception)
             }
-        // Do an asynchronous operation to fetch resturantMenuDocmt.
+
     }
 
 
