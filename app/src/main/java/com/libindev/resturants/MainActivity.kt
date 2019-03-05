@@ -32,8 +32,7 @@ class MainActivity : AppCompatActivity(),ResturantMenuAdapter.onMenuClickListene
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Data.name="Libin"
-         Log.d("fff",  Methods.name)//companion  variable.
+
 
         //getting recyclerview from xml
         val recyclerView = findViewById(R.id.recycler) as RecyclerView
