@@ -55,7 +55,6 @@ class ResturantItemAdapter(val itemList: QuerySnapshot, val context: Context) : 
 
 
             itemView.setOnClickListener {
-                (context as onMenuClickListener).onclick(user.id)
 
             }
 
