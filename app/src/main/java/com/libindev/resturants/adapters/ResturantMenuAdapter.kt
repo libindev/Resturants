@@ -4,12 +4,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
+import com.libindev.resturants.MainActivitityViewModel
 import com.libindev.resturants.R
-class ResturantMenuAdapter(val userList: QuerySnapshot,val context: Context) : RecyclerView.Adapter<ResturantMenuAdapter.ViewHolder>() {
+class ResturantMenuAdapter(val viewModel:ViewModel,val userList: QuerySnapshot,val context: Context) : RecyclerView.Adapter<ResturantMenuAdapter.ViewHolder>() {
 
     //this method is returning the view for each item in the list
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResturantMenuAdapter.ViewHolder {
@@ -38,7 +40,8 @@ class ResturantMenuAdapter(val userList: QuerySnapshot,val context: Context) : R
 
 
             chip.setOnClickListener {
-                (context as onMenuClickListener).onclick(user.id)
+
+                ( viewModel as MainActivitityViewModel).  loadRestaurantItem(context ,user.id)
 
             }
 

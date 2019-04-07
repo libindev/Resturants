@@ -62,8 +62,5 @@ class ResturantItemAdapter(val itemList: QuerySnapshot, val context: Context) : 
     }
 
 
-   public interface onMenuClickListener{
-   public   fun onclick(id :String)
 
-    }
 }

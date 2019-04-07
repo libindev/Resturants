@@ -4,7 +4,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.LinearLayout
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +15,7 @@ import com.libindev.resturants.adapters.ResturantMenuAdapter
 
 
 
-class MainActivity : AppCompatActivity(),ResturantMenuAdapter.onMenuClickListener {
+class MainActivity : AppCompatActivity(){
 
     lateinit   var   restaurantMenu :MutableLiveData<QuerySnapshot>
     lateinit   var   restaurantItem :MutableLiveData<QuerySnapshot>
@@ -40,7 +39,7 @@ class MainActivity : AppCompatActivity(),ResturantMenuAdapter.onMenuClickListene
          restaurantMenu.observe(this, Observer<QuerySnapshot>{ resturantMenuDocmt ->
             if (resturantMenuDocmt != null) {
 
-                    val adapter = ResturantMenuAdapter(resturantMenuDocmt,this)
+                    val adapter = ResturantMenuAdapter(model,resturantMenuDocmt,this)
                     recyclerView.adapter = adapter
 
 
@@ -50,9 +49,7 @@ class MainActivity : AppCompatActivity(),ResturantMenuAdapter.onMenuClickListene
         restaurantItem=  model.getResturantMenuItem()
         restaurantItem.observe(this, Observer<QuerySnapshot>{ resturantItemDoc  ->
             if (resturantItemDoc != null) {
-                for (document in resturantItemDoc) {
-                    Log.d(TAG, document.id + " => " + document.get("name"))
-                }
+
                 val adapter = ResturantItemAdapter(resturantItemDoc ,this)
                 recyclerViewItem.adapter = adapter
 
@@ -64,8 +61,5 @@ class MainActivity : AppCompatActivity(),ResturantMenuAdapter.onMenuClickListene
 
     }
 
-     override fun onclick(id:String) {
-         model.loadRestaurantItem(this@MainActivity,id)
 
-     }
 }
